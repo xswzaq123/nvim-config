@@ -69,6 +69,19 @@ return {
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+		-- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+		-- gdscript
+		local gdscript_config = {
+			capabilities = capabilities,
+			settings = {},
+		}
+		if vim.fn.has("win32") == 1 then
+			-- Windows specific. Requires nmap installed (`winget install nmap`)
+			gdscript_config["cmd"] = { "ncat", "localhost", os.getenv("GDScript_Port") or "6005" }
+		end
+		require("lspconfig").gdscript.setup(gdscript_config)
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
@@ -77,18 +90,6 @@ return {
 			local hl = "DiagnosticSign" .. type
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
-
-		local gdscript_config = {
-			capabilities = capabilities,
-			settings = {},
-		}
-
-		-- gdscript
-		if vim.fn.has("win32") == 1 then
-			-- windows specific. requires nmap installed
-			gdscript_config["cmd"] = { "ncat", "localhost", os.getenv("GDScript_Port") or "6005" }
-		end
-		require("lspconfig").gdscript.setup(capabilities)
 
 		mason_lspconfig.setup_handlers({
 			-- default handler for installed servers

@@ -51,12 +51,14 @@ return {
 				{ name = "path" }, -- file system paths
 				{ name = "codeium" },
 			}),
-			experimental = {
-				ghost_text = { hl_group = "CmpGhostText" },
-			},
+			-- experimental = {
+			-- 	ghost_text = { hl_group = "CmpGhostText" },
+			-- },
 
 			-- configure lspkind for vs-code like pictograms in completion menu
 			formatting = {
+				-- expandable_indicator = true,
+				-- fields = "kind",
 				format = lspkind.cmp_format({
 					mode = "symbol",
 					maxwidth = 50,
